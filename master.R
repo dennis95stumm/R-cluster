@@ -48,18 +48,21 @@ options = parse_args(optionParser)
 # TODO error if queue is not set
 
 #registerDoRedis(options$queue)
+
 if (any(names(options) == "init") && !is.na(options$init)) {
   source(options$init)
   setExport("worker.init")
 }
+
 # TODO check that the job script is specified
 if (any(names(options) == "files") && !is.na(options$files)) {
   source(options$script)
   files <- unlist(strsplit(options$files, split=","))
   rawData <- myData<-fread(files[1], sep = , header = FALSE)
   run(rawData)
+
+# TODO load files and call jobs in parallel
 #  foreach (file:files) {
-    # TODO load files and call jobs in parallel
 #    rawData <- myData<-fread(path, sep = , header = FALSE)
 #  }
 # TODO handle results and write them to specified outfile or to stdout
