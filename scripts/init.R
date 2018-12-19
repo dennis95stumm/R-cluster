@@ -1,0 +1,27 @@
+worker.init <- function() {
+  list.of.packages <- c("caret", "ggplot2","dummies","e1071","data.table","audio","seewave","tuneR","entropy","parallel","MASS","lme4","caTools","randomForest","factoextra","ggfortify","pROC","PRROC","precrec","doParallel")
+  new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+  if(length(new.packages)) install.packages(new.packages, repos='http://cran.us.r-project.org', lib="<PATH>/Rlib")
+
+  library(caret)
+  library(ggplot2)
+  library(dummies)
+  library(e1071)
+  library(data.table)
+  library(audio)
+  library(seewave)
+  library(tuneR)
+  library(entropy)
+  library(parallel)
+  library(MASS)
+  library(lme4)
+  library(caTools)
+  library(randomForest)
+  library(factoextra)
+  library(ggfortify)
+  library(pROC)
+  library(PRROC) 
+  library(factoextra)
+  library(precrec)  
+  library(doParallel)
+}
