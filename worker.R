@@ -22,4 +22,5 @@ optionList = list(
 optionParser = OptionParser(option_list=optionList)
 options = parse_args(optionParser)
 
+# todo allow multiple queues
 startLocalWorkers(n=options$number, queue=options$queue, host=options$master)
