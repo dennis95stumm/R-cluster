@@ -14,10 +14,8 @@ getFeatureData <- function (MyData, NrOfRecords)
   EntropyChannel <- matrix(nrow = NrOfRecords, ncol = 156)
   LabelChannel <- matrix(nrow = NrOfRecords, ncol = 1)
   
-  numRows <-length(MyData)
-  
   foreach (i=1:NrOfRecords) %dopar% {
-    ChannelsWavobj <- WaveMC(transpose(MyData[c(4*(i-1)+1,4*(i-1)+2,4*(i-1)+3, 4*(i-1)+4 ),-numRows]), samp.rate = 5512, bit = 16)
+    ChannelsWavobj <- WaveMC(transpose(MyData[c(4*(i-1)+1,4*(i-1)+2,4*(i-1)+3, 4*(i-1)+4 ),-498]), samp.rate = 5512, bit = 16)
     
     #calculating Mel frequency of 4 channels
     
@@ -81,7 +79,7 @@ getFeatureData <- function (MyData, NrOfRecords)
     KurtChannel[i,] <- as.matrix(apply(cbind(Channel1Mel, Channel2Mel, Channel3Mel, Channel4Mel, Channel1DeltaMel, Channel2DeltaMel, Channel3DeltaMel, Channel4DeltaMel,Channel1deltaDeltaMel, Channel2deltaDeltaMel, Channel3deltaDeltaMel, Channel4deltaDeltaMel), 2 , FUN = kurtosis))
     EntropyChannel[i,] <- as.matrix(apply(cbind(Channel1Mel, Channel2Mel, Channel3Mel, Channel4Mel, Channel1DeltaMel, Channel2DeltaMel, Channel3DeltaMel, Channel4DeltaMel,Channel1deltaDeltaMel, Channel2deltaDeltaMel, Channel3deltaDeltaMel, Channel4deltaDeltaMel), 2 , FUN = entropy))
     
-    LabelChannel[i,1] <- as.matrix(MyData[4*(i-1)+1, numRows]+1)
+    LabelChannel[i,1] <- as.matrix(MyData[4*(i-1)+1, 498]+1)
   }
   
   FeatureVector <- cbind(MeanChannel,SumChannel,VarChannel,MinChannel, MaxChannel, SkewChannel, KurtChannel, EntropyChannel, LabelChannel)
