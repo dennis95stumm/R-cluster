@@ -35,7 +35,7 @@ runWorker <- function(num) {
   con <- hiredis(host=options$master)
   queue <- unlist(con$SCAN(0)[2][1])[1]
 
-  if (!is.na(queue)) {
+  if (!is.null(queue) && !is.na(queue)) {
     queue <- sub("\\..*", "", queue)
     redisWorker(
       queue=queue,
@@ -44,7 +44,8 @@ runWorker <- function(num) {
         options$logpath,
         paste("worker_", num, ".log", sep=""),
         sep=.Platform$file.sep
-      )
+      ),
+      linger=0
     )
   }
 
