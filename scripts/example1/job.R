@@ -4,5 +4,5 @@ source(paste(path, "getDataSize.R", sep="/"))
 source(paste(path, "getFeatureData.R", sep="/"))
 
 run <- function(x) {
-  getFeatureData(x, getDataSize(x))
+  return(capture.output(write.csv(getFeatureData(x, getDataSize(x)))))
 }

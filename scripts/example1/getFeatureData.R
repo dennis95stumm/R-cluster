@@ -78,10 +78,10 @@ getFeatureData <- function (MyData, NrOfRecords)
     SkewChannel[i,] <- as.matrix(apply(cbind(Channel1Mel, Channel2Mel, Channel3Mel, Channel4Mel, Channel1DeltaMel, Channel2DeltaMel, Channel3DeltaMel, Channel4DeltaMel,Channel1deltaDeltaMel, Channel2deltaDeltaMel, Channel3deltaDeltaMel, Channel4deltaDeltaMel), 2 , FUN = skewness))
     KurtChannel[i,] <- as.matrix(apply(cbind(Channel1Mel, Channel2Mel, Channel3Mel, Channel4Mel, Channel1DeltaMel, Channel2DeltaMel, Channel3DeltaMel, Channel4DeltaMel,Channel1deltaDeltaMel, Channel2deltaDeltaMel, Channel3deltaDeltaMel, Channel4deltaDeltaMel), 2 , FUN = kurtosis))
     EntropyChannel[i,] <- as.matrix(apply(cbind(Channel1Mel, Channel2Mel, Channel3Mel, Channel4Mel, Channel1DeltaMel, Channel2DeltaMel, Channel3DeltaMel, Channel4DeltaMel,Channel1deltaDeltaMel, Channel2deltaDeltaMel, Channel3deltaDeltaMel, Channel4deltaDeltaMel), 2 , FUN = entropy))
-    
+
     LabelChannel[i,1] <- as.matrix(MyData[4*(i-1)+1, 498]+1)
   }
-  
+
   FeatureVector <- cbind(MeanChannel,SumChannel,VarChannel,MinChannel, MaxChannel, SkewChannel, KurtChannel, EntropyChannel, LabelChannel)
   
   return(FeatureVector)
