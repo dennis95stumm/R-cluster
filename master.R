@@ -39,6 +39,10 @@ optionList = list(
       "Path to the file where the results of the job should be saved.",
       sep="\n\t\t"
     )
+  ), make_option(
+    c("-m", "--master"),
+    type="character",
+    help="The hostname or ip address of the master node."
   )
 )
 
@@ -47,7 +51,7 @@ options = parse_args(optionParser)
 
 # TODO error if queue is not set
 
-#registerDoRedis(options$queue)
+registerDoRedis(options$queue, host=options$master)
 
 if (any(names(options) == "init") && !is.na(options$init)) {
   source(options$init)
@@ -67,4 +71,4 @@ if (any(names(options) == "files") && !is.na(options$files)) {
 #  }
 # TODO handle results and write them to specified outfile or to stdout
 }
-#removeQueue(options$queue)
+removeQueue(options$queue)
