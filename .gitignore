@@ -37,4 +37,4 @@ rsconnect/
 
 *.csv
 *.bin
-#scripts/**/*.R
+*.log
