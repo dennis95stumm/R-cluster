@@ -9,7 +9,12 @@ if (!isOptionSpecified("queue", options)) {
   stop("There must be at least a queue specified!")
 }
 
-# TODO: Throw error if there is already a queue with that name
+con <- hiredis(c(redisOpts))
+queue <- unlist(con$SCAN(0, paste(options$queue, ".*", sep=""))[2][1])[1]
+
+if (!is.null(queue) && !is.na(queue)) {
+  stop(paste("There is already a queue with the name:", options$queue))
+}
 
 do.call("registerDoRedis", args=c(options$queue, redisOpts))
 
