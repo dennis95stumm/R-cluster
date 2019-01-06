@@ -55,6 +55,14 @@ getWorkerOptionList <- function() {
 getMasterOptionList <- function() {
   masterOptions <- list(
     make_option(
+      c("-c", "--chunksize"),
+      type="integer",
+      help=paste(
+        "Size of the chunks for the jobs that gets submitted to the worker.",
+        sep="\n\t\t"
+      )
+    ), 
+    make_option(
       c("-f", "--file"),
       type="character",
       help=paste(

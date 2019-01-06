@@ -40,6 +40,10 @@ tryCatch({
       stop("In the specified script is no function named run!")
     }
 
+    if (isOptionSpecified("chunksize", options)) {
+      setChunkSize(options$chunksize)
+    }
+
     setProgress(TRUE)
     result <- run(options$file)
 
