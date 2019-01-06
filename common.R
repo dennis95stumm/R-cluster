@@ -1,0 +1,136 @@
+library("doRedis")
+library("optparse")
+library("parallel")
+library("redux")
+
+# TODO: Add doc
+
+getCommonOptionList <- function() {
+  return(list(
+    make_option(
+      c("-m", "--master"),
+      type="character",
+      help="The hostname or ip address of the master where the redis process runs."
+    ), make_option(
+      c("-mp", "--master-port"),
+      type="integer",
+      help="The port of the redis process on the master."
+    ), make_option(
+      c("-mpwd", "--master-password"),
+      type="character",
+      help="The password of the redis process on the master."
+    ), make_option(
+      c("-mdb", "--master-database"),
+      type="character",
+      help="The name of the database in redis on the master."
+    )
+  ))
+}
+
+getWorkerOptionList <- function() {
+  workerOptions <- list(
+    make_option(
+      c("-l", "--logpath"),
+      type="character",
+      default=".",
+      help=paste(
+        "The path to the workers log files. Defaults to the current path.",
+        "Per each worker gets a custom file created.",
+        sep="\n\t\t"
+      )
+    ), make_option(
+      c("-n", "--number"),
+      type="integer",
+      default=detectCores(),
+      help="Number of workers to start. Defaults to number of computers cores."
+    )
+  )
+
+  commonOptions <- getCommonOptionList()
+  workerOptions <- append(workerOptions, commonOptions)
+  
+  return(workerOptions)
+}
+
+getMasterOptionList <- function() {
+  masterOptions <- list(
+    make_option(
+      c("-f", "--file"),
+      type="character",
+      help=paste(
+        "Path to the file which contains the data for the job.",
+        sep="\n\t\t"
+      )
+    ), make_option(
+      c("-i", "--init"),
+      type="character",
+      help=paste(
+        "Path to the init script (e.g. installation of libs) that should be",
+        "executed on each worker. This file should contain a function named",
+        "woker.init without any parameters.",
+        sep="\n\t\t"
+      )
+    ), make_option(
+      c("-o", "--outfile"),
+      type="character",
+      help=paste(
+        "Path to the file where the results of the job should be saved.",
+        sep="\n\t\t"
+      )
+    ), make_option(
+      c("-q", "--queue"),
+      type="character",
+      help="The queue the workes should run on."
+    ), make_option(
+      c("-s", "--script"),
+      type="character",
+      help=paste(
+        "Path to the job script. This script should contain a run function",
+        "taking only one argument, where the data for the job will be passed.",
+        sep="\n\t\t"
+      )
+    )
+  )
+
+  commonOptions <- getCommonOptionList()
+  masterOptions <- append(masterOptions, commonOptions)
+
+  return(masterOptions)
+}
+
+parseWorkerArgs <- function() {
+  optionParser = OptionParser(option_list=getWorkerOptionList())
+  options = parse_args(optionParser)
+
+  return(options)
+}
+
+parseMasterArgs <- function() {
+  optionParser = OptionParser(option_list=getMasterOptionList())
+  options = parse_args(optionParser)
+
+  return(options)
+}
+
+getRedisOptionsFromArgs <- function(options) {
+  redisOpts <- list()
+
+  if (isOptionSpecified("master", options)) {
+    redisOpts$host <- options$master
+  }
+  if (isOptionSpecified("master-port", options)) {
+    redisOpts$port <- options$"master-port"
+  }
+  if (isOptionSpecified("master-password", options)) {
+    redisOpts$password <- options$"master-password"
+  }
+  if (isOptionSpecified("master-database", options)) {
+    redisOpts$db <- options$"master-database"
+  }
+
+  return(redisOpts)
+}
+
+isOptionSpecified <- function(option, options) {
+  return(any(names(options) == option) && !is.na(options[option]))
+}
