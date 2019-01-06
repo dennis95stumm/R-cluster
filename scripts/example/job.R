@@ -28,7 +28,7 @@ run <- function(filePath) {
 
   result <- cbind(result)
   colnames(result)[1] <- "Anzahl"
-  return(capture.output(write.csv(c())))
+  return(capture.output(write.csv(result)))
 }
 
 combineResults <- function(map1, map2) {
