@@ -1,51 +1,38 @@
 # TODO: Add doc
 
 run <- function(filePath) {
-  setProgress(FALSE)
+  lines <- readLines(filePath, warn=FALSE)
 
-  iterator <- ireadLines(filePath, warn=FALSE)
+  result <- foreach (i=lines, .combine="combineResults") %dopar% {
+    partitialResult <- c()
+    characters <- unlist(strsplit(i, ""))
+    partitialResult["Gesamt"] <- length(characters)
 
-  result <- foreach (i=iterator, .combine="combineResults") %do% {
-    items <- unlist(strsplit(i, " "))
-    
-    partitialResult <- foreach (item=items, .combine="combineResults") %dopar% {
-      characterStats <- c()
-      characters <- unlist(strsplit(item, ""))
-      characterStats["Gesamt"] <- length(characters)
-
-      foreach (character=characters) %do% {
-        if (length(character) > 0) {
-          if (is.na(characterStats[character])) {
-            characterStats[character] <- 0
-          }
-
-          characterStats[character] <- characterStats[character] + 1
-        }
+    foreach (character=characters) %do% {
+      if (character == " ") {
+        character = "Leerzeichen"
       }
 
-      characterStats
+      if (length(character) > 0) {
+        if (is.na(partitialResult[character])) {
+          partitialResult[character] <- 0
+        }
+
+        partitialResult[character] <- partitialResult[character] + 1
+      }
     }
 
     partitialResult["Zeilen"] <- 1
-
-    if (length(items) == 0) {
-      partitialResult["Leerzeichen"] <- 0
-      partitialResult["Gesamt"] <- 0
-    } else {
-      partitialResult["Leerzeichen"] <- length(items) - 1
-      partitialResult["Gesamt"] <- partitialResult["Gesamt"] + partitialResult["Leerzeichen"]
-    }
-
     partitialResult
   }
 
   result <- cbind(result)
   colnames(result)[1] <- "Anzahl"
-  return(capture.output(write.csv(result)))
+  return(capture.output(write.csv(c())))
 }
 
 combineResults <- function(map1, map2) {
-  result <- c(map1)
+  result <- map1
 
   foreach (stat=names(map2)) %do% {
     if (is.na(result[stat])) {
