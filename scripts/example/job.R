@@ -26,7 +26,7 @@ run <- function(filePath) {
   lines <- readLines(filePath, warn=FALSE)
 
   # Iterate over the lines and anlyze them.
-  result <- foreach (i=lines, .combine="combineResults") %dopar% {
+  result <- foreach (i=lines, .combine="combineResults", .multicombine=TRUE, .inorder=FALSE) %dopar% {
     partitialResult <- c()
     characters <- unlist(strsplit(i, ""))
     partitialResult["Gesamt"] <- length(characters)
@@ -38,7 +38,7 @@ run <- function(filePath) {
       }
 
       if (length(character) > 0) {
-        if (is.na(partitialResult[character])) {
+        if (is.null(partitialResult[character]) || is.na(partitialResult[character])) {
           partitialResult[character] <- 0
         }
 
@@ -61,15 +61,17 @@ run <- function(filePath) {
 #' @param map2 Vector with the second subresult.
 #'
 #' @return A vector containing the merged stats of the subresults.
-combineResults <- function(map1, map2) {
-  result <- map1
+combineResults <- function(...) {
+  result <- c()
 
-  foreach (stat=names(map2)) %do% {
-    if (is.na(result[stat])) {
-      result[stat] <- 0
+  foreach (part=list(...)) %do% {
+    foreach (stat=names(part)) %do% {
+      if (is.null(result[stat]) || is.na(result[stat])) {
+        result[stat] <- 0
+      }
+
+      result[stat] <- result[stat] + part[stat]
     }
-
-    result[stat] <- result[stat] + map2[stat]
   }
 
   return(result)
