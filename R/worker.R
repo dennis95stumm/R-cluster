@@ -30,6 +30,7 @@ runWorker <- function(num) {
   con <- hiredis(c(redisOpts))
 
   while (TRUE) {
+    # TODO: Check if the connection is still ready!
     # Check if there is a queue in Redis database.
     queue <- unlist(con$SCAN(0)[2][1])[1]
 
