@@ -30,15 +30,15 @@ getCommonOptionList <- function() {
       type="character",
       help="The hostname or ip address of the master where the redis process runs."
     ), make_option(
-      c("-mp", "--master-port"),
+      c("-p", "--master-port"),
       type="integer",
       help="The port of the redis process on the master."
     ), make_option(
-      c("-mpwd", "--master-password"),
+      c("-w", "--master-password"),
       type="character",
       help="The password of the redis process on the master."
     ), make_option(
-      c("-mdb", "--master-database"),
+      c("-d", "--master-database"),
       type="character",
       help="The name of the database in redis on the master."
     )

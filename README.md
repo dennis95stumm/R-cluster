@@ -78,9 +78,9 @@ The following options can be passed to the worker script:
 | Short | Long              | Default         | Description |
 | ----- | ----------------- | --------------- | ----------- |
 | -m    | --master          |                 | The hostname or ip address of the master where the redis process runs. |
-| -mp   | --master-port     |                 | The port of the redis process on the master. |
-| -mpwd | --master-password |                 | The password of the redis process on the master. |
-| -mdb  | --master-database |                 | The name of the database in redis on the master. |
+| -p    | --master-port     |                 | The port of the redis process on the master. |
+| -w    | --master-password |                 | The password of the redis process on the master. |
+| -d    | --master-database |                 | The name of the database in redis on the master. |
 | -l    | --logpath         | "."             | The path to the workers log files. Defaults to the current path. Per each worker gets a custom file created. |
 | -n    | --number          | number of cores | Number of workers to start. Defaults to number of computers cores. |
 
@@ -98,9 +98,9 @@ The following options can be passed to the master script:
 | Short | Long              | Description |
 | ----- | ----------------- | ----------- |
 | -m    | --master          | The hostname or ip address of the master where the redis process runs. |
-| -mp   | --master-port     | The port of the redis process on the master. |
-| -mpwd | --master-password | The password of the redis process on the master. |
-| -mdb  | --master-database | The name of the database in redis on the master. |
+| -p    | --master-port     | The port of the redis process on the master. |
+| -w    | --master-password | The password of the redis process on the master. |
+| -d    | --master-database | The name of the database in redis on the master. |
 | -c    | --chunksize       | Size of the chunks for the jobs that gets submitted to the worker. |
 | -f    | --file            | Path to the file which contains the data for the job. |
 | -i    | --init            | Path to the init script (e.g. installation of libs) that should be executed on each worker. This file should contain a function named woker.init without any parameters. |
