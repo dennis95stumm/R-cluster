@@ -1,10 +1,28 @@
+#' This file is part of R-cluster.
+#'
+#' R-cluster is free software: you can redistribute it and/or modify
+#' it under the terms of the GNU General Public License as published by
+#' the Free Software Foundation, either version 3 of the License, or
+#' (at your option) any later version.
+#'
+#' R-cluster is distributed in the hope that it will be useful,
+#' but WITHOUT ANY WARRANTY; without even the implied warranty of
+#' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#' GNU General Public License for more details.
+#'
+#' You should have received a copy of the GNU General Public License
+#' along with R-cluster.  If not, see <http://www.gnu.org/licenses/>.
+#'
+#' This file contains functionality that is used in master and worker scripts.
+
 library("doRedis")
 library("optparse")
 library("parallel")
 library("redux")
 
-# TODO: Add doc
-
+#' Returns a list of common options that used in the master and worker scripts.
+#'
+#' @return List containing options for master and worker scripts.
 getCommonOptionList <- function() {
   return(list(
     make_option(
@@ -27,6 +45,9 @@ getCommonOptionList <- function() {
   ))
 }
 
+#' Returns a list of options that can be passed to the worker script.
+#'
+#' @return List containing options for worker script.
 getWorkerOptionList <- function() {
   workerOptions <- list(
     make_option(
@@ -52,6 +73,9 @@ getWorkerOptionList <- function() {
   return(workerOptions)
 }
 
+#' Returns a list of options that can be passed to the master script.
+#'
+#' @return List containing options for master script.
 getMasterOptionList <- function() {
   masterOptions <- list(
     make_option(
@@ -106,6 +130,10 @@ getMasterOptionList <- function() {
   return(masterOptions)
 }
 
+#' Returns a list of options that were passed to the worker script.
+#'
+#' @return List of options that were passed to the worker script.
+#' @export
 parseWorkerArgs <- function() {
   optionParser = OptionParser(option_list=getWorkerOptionList())
   options = parse_args(optionParser)
@@ -113,6 +141,10 @@ parseWorkerArgs <- function() {
   return(options)
 }
 
+#' Returns a list of options that were passed to the master script.
+#'
+#' @return List of options that were passed to the master script.
+#' @export
 parseMasterArgs <- function() {
   optionParser = OptionParser(option_list=getMasterOptionList())
   options = parse_args(optionParser)
@@ -120,6 +152,12 @@ parseMasterArgs <- function() {
   return(options)
 }
 
+#' Returns the redis options passed to the script as commandline params.
+#'
+#' @param options The options passed to the script as commandline params.
+#'
+#' @return The redis options passed to the script as commandline params.
+#' @export
 getRedisOptionsFromArgs <- function(options) {
   redisOpts <- list()
 
@@ -139,6 +177,13 @@ getRedisOptionsFromArgs <- function(options) {
   return(redisOpts)
 }
 
+#' Returns a boolean that indicates whether the option was passed or not.
+#'
+#' @param option Option that should be checked.
+#' @param options Options passed to the script as commandline params.
+#'
+#' @return Boolean that indicates whether the option was passed or not.
+#' @export
 isOptionSpecified <- function(option, options) {
   return(any(names(options) == option) && !is.na(options[option]))
 }
