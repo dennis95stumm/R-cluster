@@ -36,7 +36,7 @@ on the official [website](https://www.r-project.org/).
 
 The required libraries must be installed on the master machine as well as on the
 worker machines. It might be necessary to specify the
-(library path)[https://www.r-bloggers.com/package-paths-in-r/] if the default
+[library path](https://www.r-bloggers.com/package-paths-in-r/) if the default
 library path is not writeable for the current user. To run the platform the
 libraries can be installed with the following instructions in the interactive R
 shell:
