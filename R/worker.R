@@ -55,7 +55,6 @@ runWorker <- function(num) {
       
       # Cleanup and close log file for the worker.
       sink(type="message")
-      sink()
       flush(params$log)
       close(params$log)
     }
