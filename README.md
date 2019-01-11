@@ -107,7 +107,7 @@ The following options can be passed to the master script:
 | -o    | --outfile         | Path to the file where the results of the job should be saved. |
 | -q    | --queue           | The queue the workes should run on. |
 | -s    | --script          | Path to the job script. This script should contain a run function taking only one argument, where the data for the job will be passed. |
-
+| -t    | --time            | Indicates whether the run time of the script should be measured and printed to the console. **Warning**: The real time of the algorithm may be shorter, you must take into account the waiting time for free workers. |
 
 ### Writing new jobs
 

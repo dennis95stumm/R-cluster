@@ -121,6 +121,16 @@ getMasterOptionList <- function() {
         "taking only one argument, where the data for the job will be passed.",
         sep="\n\t\t"
       )
+    ),
+    make_option(
+      c("-t", "--time"),
+      default=FALSE,
+      type="logical",
+      help=paste(
+        "Indicates whether the run time of the script should be measured and",
+        "printed to the console.",
+        sep="\n\t\t"
+      )
     )
   )
 

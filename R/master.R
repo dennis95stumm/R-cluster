@@ -69,8 +69,17 @@ tryCatch({
     # Enable progressbar.
     setProgress(TRUE)
 
+    if (options$time) {
+      start <- Sys.time()
+    }
+
     # Run the job.
     result <- run(options$file)
+
+    if (options$time) {
+      end <- Sys.time()
+      print(end - start)
+    }
 
     # Write the output to the specified outfile or to the console.
     if (isOptionSpecified("outfile", options)) {
