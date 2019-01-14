@@ -63,4 +63,6 @@ runWorker <- function(num) {
 }
 
 # Start workers on the cluster depending on the amount passed to the script.
-mclapply(c(1:options$number), runWorker, mc.cores=options$number)
+cl <- makeCluster(options$number)
+parLapply(cl, c(1:options$number), runWorker)
+stopCluster(cl)
