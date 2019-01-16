@@ -67,10 +67,6 @@ tryCatch({
       setChunkSize(options$chunksize)
     }
 
-    # Enable progressbar.
-    # Commented due to lacking Windows support
-    # setProgress(TRUE)
-
     if (options$time) {
       start <- Sys.time()
     }

@@ -80,10 +80,7 @@ The following options can be passed to the worker script:
 | -m    | --master          |                 | The hostname or ip address of the master where the redis process runs. |
 | -p    | --master-port     |                 | The port of the redis process on the master. |
 | -w    | --master-password |                 | The password of the redis process on the master. |
-| -d    | --master-database |                 | The name of the database in redis on the master. |
 | -l    | --logpath         | "."             | The path to the workers log files. Defaults to the current path. Per each worker gets a custom file created. |
-| -n    | --number          | number of cores | Number of workers to start. Defaults to number of computers cores. |
-
 
 ### Run a job
 
@@ -146,9 +143,6 @@ variables.
   `combine` function for the results can lead to high cpu consumption on the
   machine, where was the master script started and this can lead to slowing up
   the whole job.
-* Running jobs with iterators doesn't support the progressbar yet. So it is
-  necessary to deactivate the progressbar by calling `setProgress(FALSE)` in
-  the specific job.
 
 ## License
 

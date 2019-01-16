@@ -37,10 +37,6 @@ getCommonOptionList <- function() {
       c("-w", "--master-password"),
       type="character",
       help="The password of the redis process on the master."
-    ), make_option(
-      c("-d", "--master-database"),
-      type="character",
-      help="The name of the database in redis on the master."
     )
   ))
 }
@@ -59,11 +55,6 @@ getWorkerOptionList <- function() {
         "Per each worker gets a custom file created.",
         sep="\n\t\t"
       )
-    ), make_option(
-      c("-n", "--number"),
-      type="integer",
-      default=detectCores(),
-      help="Number of workers to start. Defaults to number of computers cores."
     )
   )
 
