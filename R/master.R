@@ -19,6 +19,7 @@ source("./common.R")
 
 # Parse the passed args to this script throught the command line.
 options <- parseMasterArgs()
+options('redis:num'=TRUE)
 redisOpts <- getRedisOptionsFromArgs(options)
 
 # Check that there is a queue specified.
@@ -67,7 +68,8 @@ tryCatch({
     }
 
     # Enable progressbar.
-    setProgress(TRUE)
+    # Commented due to lacking Windows support
+    # setProgress(TRUE)
 
     if (options$time) {
       start <- Sys.time()
