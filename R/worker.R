@@ -39,11 +39,7 @@ while (TRUE) {
       linger=1,
       redisOpts
     )
-    params$log <- file(paste(
-      options$logpath,
-      paste("worker_", num, ".log", sep=""),
-      sep=.Platform$file.sep
-    ), open="a+")
+    params$log <- file(options$logfile, open="a+")
     
     # Start worker for executing the job for the found queue.
     do.call("redisWorker", params)

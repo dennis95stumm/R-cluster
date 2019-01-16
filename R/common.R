@@ -47,12 +47,10 @@ getCommonOptionList <- function() {
 getWorkerOptionList <- function() {
   workerOptions <- list(
     make_option(
-      c("-l", "--logpath"),
+      c("-l", "--logfile"),
       type="character",
-      default=".",
       help=paste(
-        "The path to the workers log files. Defaults to the current path.",
-        "Per each worker gets a custom file created.",
+        "The path to the workers log file. Defaults to the current path.",
         sep="\n\t\t"
       )
     )

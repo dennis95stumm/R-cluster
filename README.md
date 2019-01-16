@@ -75,12 +75,12 @@ Rscript worker.R [options]
 
 The following options can be passed to the worker script:
 
-| Short | Long              | Default         | Description |
-| ----- | ----------------- | --------------- | ----------- |
-| -m    | --master          |                 | The hostname or ip address of the master where the redis process runs. |
-| -p    | --master-port     |                 | The port of the redis process on the master. |
-| -w    | --master-password |                 | The password of the redis process on the master. |
-| -l    | --logpath         | "."             | The path to the workers log files. Defaults to the current path. Per each worker gets a custom file created. |
+| Short | Long              | Description |
+| ----- | ----------------- | ----------- |
+| -m    | --master          | The hostname or ip address of the master where the redis process runs. |
+| -p    | --master-port     | The port of the redis process on the master. |
+| -w    | --master-password | The password of the redis process on the master. |
+| -l    | --logfile         | The path to the workers log file. |
 
 ### Run a job
 
