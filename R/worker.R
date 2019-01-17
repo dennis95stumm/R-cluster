@@ -21,33 +21,26 @@ source("./common.R")
 options <- parseWorkerArgs()
 redisOpts <- getRedisOptionsFromArgs(options)
 
-
 con <- hiredis(c(redisOpts))
 
-while (TRUE) {
-  # Check whether the connection is still alive, if not reconnect!
-  tryCatch({ con$PING() }, error = con$reconnect())
+# Check if there is a queue in Redis database.
+queue <- unlist(con$SCAN(0)[2][1])[1]
 
-  # Check if there is a queue in Redis database.
-  queue <- unlist(con$SCAN(0)[2][1])[1]
-
-  # Execute the job for the new found queue.
-  if (!is.null(queue) && !is.na(queue)) {
-    queue <- sub("\\..*", "", queue)
-    params <- c(
-      queue=queue,
-      linger=1,
-      redisOpts
-    )
-    params$log <- file(options$logfile, open="a+")
-    
-    # Start worker for executing the job for the found queue.
-    do.call("redisWorker", params)
-    
-    # Cleanup and close log file for the worker.
-    sink(type="message")
-    flush(params$log)
-    close(params$log)
-  }
-  Sys.sleep(10)
+# Execute the job for the new found queue.
+if (!is.null(queue) && !is.na(queue)) {
+  queue <- sub("\\..*", "", queue)
+  params <- c(
+    queue=queue,
+    linger=1,
+    redisOpts
+  )
+  params$log <- file(options$logfile, open="a+")
+  
+  # Start worker for executing the job for the found queue.
+  do.call("redisWorker", params)
+  
+  # Cleanup and close log file for the worker.
+  sink(type="message")
+  flush(params$log)
+  close(params$log)
 }

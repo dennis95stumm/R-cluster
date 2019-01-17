@@ -4,7 +4,7 @@ A cluster-computing platform for R scripts!
 
 ## Requirements
 
-* Redis: 5.0.3
+* Redis: 2.8.0
 * R: 3.5.2
 * R-Libraries:
   * doRedis: 1.2.2
@@ -97,7 +97,6 @@ The following options can be passed to the master script:
 | -m    | --master          | The hostname or ip address of the master where the redis process runs. |
 | -p    | --master-port     | The port of the redis process on the master. |
 | -w    | --master-password | The password of the redis process on the master. |
-| -d    | --master-database | The name of the database in redis on the master. |
 | -c    | --chunksize       | Size of the chunks for the jobs that gets submitted to the worker. |
 | -f    | --file            | Path to the file which contains the data for the job. |
 | -i    | --init            | Path to the init script (e.g. installation of libs) that should be executed on each worker. This file should contain a function named woker.init without any parameters. |
@@ -135,9 +134,6 @@ variables.
 
 #### Notes
 
-* Depending on the implementation of the job script it may be that the workers
-  wouldn't free up the memory after executing a job. Be careful by using
-  variables throught multiple workers!
 * The job could run slow if there are a lot of iterations, it might be useful to
   adjust the `chunksize` to get a faster job execution. Also depending on the
   `combine` function for the results can lead to high cpu consumption on the
