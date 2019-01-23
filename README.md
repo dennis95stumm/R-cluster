@@ -2,6 +2,8 @@
 
 A cluster-computing platform for R scripts!
 
+![schema](./schema.jpg)
+
 ## Requirements
 
 * Redis: 2.8.0
