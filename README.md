@@ -2,7 +2,23 @@
 
 A cluster-computing platform for R scripts!
 
+## Overview
+
+The cluster-computing platform for R scripts is based on the
+[doRedis-package](https://github.com/bwlewis/doRedis). So its only parallizes
+foreach. A overview over the functionality can be get from the following schema:
+
 ![schema](./schema.jpg)
+
+* When starting a new job by running the master.R script, as first step the
+  worker.init function if it is available gets exported to redis
+* Further the jobscript and data, over which the foreach loop iterates, gets
+  also exported to redis
+* Then the available worker on the cluster, that gets started with the worker.R
+  script grabs the new job, run once before starting the job the worker.init
+  script and runs the jobscript
+* After a dataset was processed, the results gets written to redis
+* The master takes the results and combines them by using the combine function
 
 ## Requirements
 
@@ -84,6 +100,10 @@ The following options can be passed to the worker script:
 | -w    | --master-password | The password of the redis process on the master. |
 | -l    | --logfile         | The path to the workers log file. |
 
+This script exits after all jobs for a queue where done or if there isn't any
+queue on the cluster available. So it may be necessary to run this script in a
+service. For windows the [clients](#clients) can be used.
+
 ### Run a job
 
 To run a new job on the cluster you must execute the following line:
@@ -141,6 +161,12 @@ variables.
   `combine` function for the results can lead to high cpu consumption on the
   machine, where was the master script started and this can lead to slowing up
   the whole job.
+
+## Clients
+
+There are (clients)[https://github.com/ReyKoxha/R-CC] for the scripts for
+windows available, so that it is not necessary to run the scripts from the
+console. 
 
 ## License
 

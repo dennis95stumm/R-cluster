@@ -21,12 +21,13 @@ source("./common.R")
 options <- parseWorkerArgs()
 redisOpts <- getRedisOptionsFromArgs(options)
 
+# Create a connection to the redis database.
 con <- hiredis(c(redisOpts))
 
 # Check if there is a queue in Redis database.
 queue <- unlist(con$SCAN(0)[2][1])[1]
 
-# Execute the job for the new found queue.
+# Execute jobs for the new found queue.
 if (!is.null(queue) && !is.na(queue)) {
   queue <- sub("\\..*", "", queue)
   params <- c(

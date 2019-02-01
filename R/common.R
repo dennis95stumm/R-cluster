@@ -56,6 +56,7 @@ getWorkerOptionList <- function() {
     )
   )
 
+  # Add common options to the recently defined worker options.
   commonOptions <- getCommonOptionList()
   workerOptions <- append(workerOptions, commonOptions)
   
@@ -123,6 +124,7 @@ getMasterOptionList <- function() {
     )
   )
 
+  # Add common options to the recently defined master options.
   commonOptions <- getCommonOptionList()
   masterOptions <- append(masterOptions, commonOptions)
 
@@ -160,6 +162,7 @@ parseMasterArgs <- function() {
 getRedisOptionsFromArgs <- function(options) {
   redisOpts <- list()
 
+  # Check if the options were passed and put the passed options to the list.
   if (isOptionSpecified("master", options)) {
     redisOpts$host <- options$master
   }

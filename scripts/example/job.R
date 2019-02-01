@@ -27,6 +27,7 @@ run <- function(filePath) {
 
   # Iterate over the lines and anlyze them.
   result <- foreach (i=lines, .combine="combineResults", .multicombine=TRUE, .inorder=FALSE) %dopar% {
+    #### Runs on the workers ####
     partitialResult <- c()
     characters <- unlist(strsplit(i, ""))
     partitialResult["Gesamt"] <- length(characters)
@@ -48,14 +49,21 @@ run <- function(filePath) {
 
     partitialResult["Zeilen"] <- 1
     partitialResult
+
+    #### End workers job script ####
   }
 
+  # Get the results in a csv format, so they can be saved to a csv file.
   result <- cbind(result)
   colnames(result)[1] <- "Anzahl"
   return(capture.output(write.csv(result)))
 }
 
 #' Merges the stats of two subresults.
+#'
+#' This combine function runs on the client where the master script was
+#' executed. So it isn't parallized and if there are too many iterations or
+#' chars it may be that the combine function would be run slow.
 #'
 #' @param map1 Vector with the first subresult.
 #' @param map2 Vector with the second subresult.

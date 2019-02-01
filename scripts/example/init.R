@@ -28,6 +28,7 @@ worker.init <- function() {
   newPackages <- packages[!(packages %in% installed.packages()[,"Package"])]
   if(length(newPackages)) install.packages(newPackages, repos='http://cran.us.r-project.org')
 
+  # Load libs on worker so that the job can be done.
   library("foreach")
   library("iterators")
 }

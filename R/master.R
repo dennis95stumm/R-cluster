@@ -17,9 +17,11 @@
 
 source("./common.R")
 
+# See https://github.com/bwlewis/doRedis/issues/25 for more informations!
+options('redis:num'=TRUE)
+
 # Parse the passed args to this script throught the command line.
 options <- parseMasterArgs()
-options('redis:num'=TRUE)
 redisOpts <- getRedisOptionsFromArgs(options)
 
 # Check that there is a queue specified.
