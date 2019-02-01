@@ -164,7 +164,7 @@ variables.
 
 ## Clients
 
-There are (clients)[https://github.com/ReyKoxha/R-CC] for the scripts for
+There are [clients](https://github.com/ReyKoxha/R-CC) for the scripts for
 windows available, so that it is not necessary to run the scripts from the
 console. 
 
